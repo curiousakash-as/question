@@ -11,4 +11,5 @@ public interface IRobotService {
 	// public Double getRemainingCharge();
 
 	public ResponseModel getPrice();
+	public ResponseModel setErrorMessage();
 }

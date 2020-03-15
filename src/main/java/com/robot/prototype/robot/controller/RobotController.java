@@ -15,8 +15,8 @@ public class RobotController {
 	IRobotService iRobotService;
 
 	@GetMapping("/robot")
-	public ResponseModel get(@RequestParam(name = "batteryLevel") double batteryLevel,
-			@RequestParam(name = "loadWeight") double loadWeight, @RequestParam(name = "distance") double distance) {
+	public ResponseModel get(@RequestParam(name = "batteryLevel", required = false) double batteryLevel,
+			@RequestParam(name = "loadWeight", required = false) double loadWeight, @RequestParam(name = "distance", required = false) double distance) {
 		return iRobotService.getRobotStatus(batteryLevel, loadWeight, distance);
 	}
 	

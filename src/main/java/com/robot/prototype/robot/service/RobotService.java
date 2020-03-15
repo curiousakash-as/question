@@ -62,35 +62,72 @@ public class RobotService implements IRobotService {
 			}
 		}
 	}
-
+	@Override
+	public ResponseModel setErrorMessage() {
+		ResponseModel res = new ResponseModel();
+		res.setMessage("Error occured");
+		return res;
+		
+	}
 	@Override
 	public ResponseModel getRobotStatus(double batteryLevel, double loadWeight, double distance) {
 		ResponseModel response = new ResponseModel();
-		if (checkLoadWeight(loadWeight)) {
-			response.setMessage("OverWeight");
-		} else {
-			if (loadWeight == 0.0) {
-				if (remainingBatteryNoWeight(distance, batteryLevel) == -1.0) {
-					response.setMessage("Distance is greater than the capacity of the robot");
-				} else if (remainingBatteryNoWeight(distance, batteryLevel) == -3.0) {
-					response.setMessage("Battery Dead before the distance is travelled");
-				} else {
-					response.setMessage("Battery remaining : " + remainingBatteryNoWeight(distance, batteryLevel));
-				}
-
+		try {
+			if (checkLoadWeight(loadWeight)) {
+				response.setMessage("OverWeight");
 			} else {
-				if (remainingBatteryWithWeight(distance, loadWeight) == -2.0) {
-					response.setMessage("Battery died before the distance was completely travelled");
-				} else {
-					response.setMessage("Battery Remaining : " + remainingBatteryWithWeight(distance, loadWeight));
-				}
+				if (loadWeight == 0.0) {
+					if (remainingBatteryNoWeight(distance, batteryLevel) == -1.0) {
+						response.setMessage("Distance is greater than the capacity of the robot");
+					} else if (remainingBatteryNoWeight(distance, batteryLevel) == -3.0) {
+						response.setMessage("Battery Dead before the distance is travelled");
+					} else {
+						response.setMessage("Battery remaining : " + remainingBatteryNoWeight(distance, batteryLevel));
+					}
 
+				} else {
+					if (remainingBatteryWithWeight(distance, loadWeight) == -2.0) {
+						response.setMessage("Battery died before the distance was completely travelled");
+					} else {
+						response.setMessage("Battery Remaining : " + remainingBatteryWithWeight(distance, loadWeight));
+					}
+
+				}
 			}
+			if (checkBatteryLevel(batteryLevel))
+				response.setBatteryStatus("Battery Low");
+			else
+				response.setBatteryStatus("Battery OK");	
 		}
-		if (checkBatteryLevel(batteryLevel))
-			response.setBatteryStatus("Battery Low");
-		else
-			response.setBatteryStatus("Battery OK");
+		catch(Exception e) {
+			response.setMessage("Internal error occured");
+			e.printStackTrace();
+		}
+//		if (checkLoadWeight(loadWeight)) {
+//			response.setMessage("OverWeight");
+//		} else {
+//			if (loadWeight == 0.0) {
+//				if (remainingBatteryNoWeight(distance, batteryLevel) == -1.0) {
+//					response.setMessage("Distance is greater than the capacity of the robot");
+//				} else if (remainingBatteryNoWeight(distance, batteryLevel) == -3.0) {
+//					response.setMessage("Battery Dead before the distance is travelled");
+//				} else {
+//					response.setMessage("Battery remaining : " + remainingBatteryNoWeight(distance, batteryLevel));
+//				}
+//
+//			} else {
+//				if (remainingBatteryWithWeight(distance, loadWeight) == -2.0) {
+//					response.setMessage("Battery died before the distance was completely travelled");
+//				} else {
+//					response.setMessage("Battery Remaining : " + remainingBatteryWithWeight(distance, loadWeight));
+//				}
+//
+//			}
+//		}
+//		if (checkBatteryLevel(batteryLevel))
+//			response.setBatteryStatus("Battery Low");
+//		else
+//			response.setBatteryStatus("Battery OK");
 
 		return response;
 	}
