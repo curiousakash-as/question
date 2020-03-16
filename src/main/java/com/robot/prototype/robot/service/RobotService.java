@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.robot.prototype.robot.exceptions.IllegalUrlException;
 import com.robot.prototype.robot.model.ResponseModel;
 
 @Service
@@ -63,9 +64,9 @@ public class RobotService implements IRobotService {
 		}
 	}
 	@Override
-	public ResponseModel setErrorMessage() {
+	public ResponseModel setErrorMessage(String e) {
 		ResponseModel res = new ResponseModel();
-		res.setMessage("Error occured");
+		res.setMessage("Error occured : " +e);
 		return res;
 		
 	}

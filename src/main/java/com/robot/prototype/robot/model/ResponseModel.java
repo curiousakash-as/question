@@ -8,7 +8,16 @@ public class ResponseModel {
 
 	private String message;
 	private String batteryStatus;
+	private String errorMessage;
+	
 
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage=errorMessage;
+	}
+	
+	public String getErrorMessage() {
+		return errorMessage;
+	}
 	public String getBatteryStatus() {
 		return batteryStatus;
 	}
